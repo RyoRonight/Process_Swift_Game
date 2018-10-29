@@ -1,24 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" systemVersion="17A277" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="landscape">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--View Main-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewMain" customModule="projectGame_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6p2-Fo-Xc0">
+                                <rect key="frame" x="-0.5" y="0.0" width="667" height="375"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="579-EO-dpJ">
+                                <rect key="frame" x="183.5" y="129.5" width="333.5" height="116.5"/>
+                                <connections>
+                                    <segue destination="OFg-Un-OOh" kind="presentation" id="MlQ-Fp-z3o"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="6p2-Fo-Xc0" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="7kl-G8-yXp"/>
+                            <constraint firstItem="6p2-Fo-Xc0" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="8Ce-HG-teh"/>
+                            <constraint firstItem="579-EO-dpJ" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.5" id="It5-vX-wGV"/>
+                            <constraint firstItem="579-EO-dpJ" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.31" id="KBh-HF-GLP"/>
+                            <constraint firstItem="579-EO-dpJ" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="MVF-lD-hUs"/>
+                            <constraint firstItem="6p2-Fo-Xc0" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="c1q-uJ-cNY"/>
+                            <constraint firstItem="579-EO-dpJ" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" multiplier="1.05" id="jPS-TB-ycW"/>
+                            <constraint firstItem="6p2-Fo-Xc0" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="nWF-2X-rHx"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="background" destination="6p2-Fo-Xc0" id="5Th-a5-fcp"/>
+                        <outlet property="btnTapToPlay" destination="579-EO-dpJ" id="Mrx-Dy-VkF"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+        </scene>
+        <!--View Play Now-->
+        <scene sceneID="9zL-zb-Ife">
+            <objects>
+                <viewController id="OFg-Un-OOh" customClass="ViewPlayNow" customModule="projectGame_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="vb3-fD-8WW">
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0Cn-qX-ggI">
+                                <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="0Cn-qX-ggI" firstAttribute="centerX" secondItem="0V7-jn-ue7" secondAttribute="centerX" id="3Ol-KA-nsd"/>
+                            <constraint firstItem="0Cn-qX-ggI" firstAttribute="height" secondItem="vb3-fD-8WW" secondAttribute="height" id="elS-zD-xud"/>
+                            <constraint firstItem="0Cn-qX-ggI" firstAttribute="centerY" secondItem="0V7-jn-ue7" secondAttribute="centerY" id="i8P-Hc-5J0"/>
+                            <constraint firstItem="0Cn-qX-ggI" firstAttribute="width" secondItem="vb3-fD-8WW" secondAttribute="width" id="zSH-29-LHQ"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="0V7-jn-ue7"/>
+                    </view>
+                    <connections>
+                        <outlet property="imgBackground" destination="0Cn-qX-ggI" id="eC3-Bz-Ceh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RBi-Nu-acy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="729" y="17"/>
         </scene>
     </scenes>
 </document>
