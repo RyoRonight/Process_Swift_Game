@@ -54,30 +54,16 @@
         <scene sceneID="9zL-zb-Ife">
             <objects>
                 <viewController id="OFg-Un-OOh" customClass="ViewPlayNow" customModule="projectGame_iOS" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="vb3-fD-8WW">
+                    <view key="view" contentMode="scaleToFill" id="vb3-fD-8WW" customClass="SKView">
                         <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0Cn-qX-ggI">
-                                <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
-                            </imageView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="0Cn-qX-ggI" firstAttribute="centerX" secondItem="0V7-jn-ue7" secondAttribute="centerX" id="3Ol-KA-nsd"/>
-                            <constraint firstItem="0Cn-qX-ggI" firstAttribute="height" secondItem="vb3-fD-8WW" secondAttribute="height" id="elS-zD-xud"/>
-                            <constraint firstItem="0Cn-qX-ggI" firstAttribute="centerY" secondItem="0V7-jn-ue7" secondAttribute="centerY" id="i8P-Hc-5J0"/>
-                            <constraint firstItem="0Cn-qX-ggI" firstAttribute="width" secondItem="vb3-fD-8WW" secondAttribute="width" id="zSH-29-LHQ"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="0V7-jn-ue7"/>
                     </view>
-                    <connections>
-                        <outlet property="imgBackground" destination="0Cn-qX-ggI" id="eC3-Bz-Ceh"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RBi-Nu-acy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="729" y="17"/>
+            <point key="canvasLocation" x="769" y="102"/>
         </scene>
     </scenes>
 </document>
