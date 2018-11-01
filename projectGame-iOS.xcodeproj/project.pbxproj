@@ -14,6 +14,8 @@
 		2A7923352186FE6500A39B5A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A7923332186FE6500A39B5A /* LaunchScreen.storyboard */; };
 		2A79233D2187051900A39B5A /* ViewMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A79233C2187051900A39B5A /* ViewMain.swift */; };
 		2A79233F218714B600A39B5A /* ViewPlayNow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A79233E218714B600A39B5A /* ViewPlayNow.swift */; };
+		2ADEA890218B06440032A9BE /* CheckWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ADEA88F218B06440032A9BE /* CheckWord.swift */; };
+		2ADEA896218B1FF30032A9BE /* DataGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ADEA895218B1FF30032A9BE /* DataGame.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		2A7923362186FE6500A39B5A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2A79233C2187051900A39B5A /* ViewMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewMain.swift; sourceTree = "<group>"; };
 		2A79233E218714B600A39B5A /* ViewPlayNow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPlayNow.swift; sourceTree = "<group>"; };
+		2ADEA88F218B06440032A9BE /* CheckWord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckWord.swift; sourceTree = "<group>"; };
+		2ADEA895218B1FF30032A9BE /* DataGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataGame.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +70,8 @@
 				2A7923362186FE6500A39B5A /* Info.plist */,
 				2A79233C2187051900A39B5A /* ViewMain.swift */,
 				2A79233E218714B600A39B5A /* ViewPlayNow.swift */,
+				2ADEA88F218B06440032A9BE /* CheckWord.swift */,
+				2ADEA895218B1FF30032A9BE /* DataGame.swift */,
 			);
 			path = "projectGame-iOS";
 			sourceTree = "<group>";
@@ -144,7 +150,9 @@
 				2A79233D2187051900A39B5A /* ViewMain.swift in Sources */,
 				2A79233F218714B600A39B5A /* ViewPlayNow.swift in Sources */,
 				2A79232D2186FE6200A39B5A /* ViewController.swift in Sources */,
+				2ADEA890218B06440032A9BE /* CheckWord.swift in Sources */,
 				2A79232B2186FE6200A39B5A /* AppDelegate.swift in Sources */,
+				2ADEA896218B1FF30032A9BE /* DataGame.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
