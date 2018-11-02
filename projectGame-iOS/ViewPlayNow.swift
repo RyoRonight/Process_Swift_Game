@@ -253,7 +253,7 @@ class ViewPlayNow: UIViewController {
     }
     
     private func setupNoti() {
-        imgVS.image = UIImage(named: "layer 2.png")
+        imgVS.image = UIImage(named: "layer 1.png")
         
         btnNewGame.setBackgroundImage(UIImage(named: "layer 3.png"), for: UIControlState.normal)
         btnNewGame.setTitle("New Game", for: .normal)

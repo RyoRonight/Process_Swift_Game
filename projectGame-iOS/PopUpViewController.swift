@@ -34,7 +34,7 @@ class PopUpViewController: UIViewController {
     }
     
     private func setupDisplay() {
-        imgBgSetting.image = UIImage(named: "layer 2.png")
+        imgBgSetting.image = UIImage(named: "layer 1.png")
         btnNewGame.setBackgroundImage(UIImage(named: "layer 3.png"), for: .normal)
         btnBack.setBackgroundImage(UIImage(named: "layer 3.png"), for: .normal)
         btnQuit.setBackgroundImage(UIImage(named: "layer 3.png"), for: .normal)
