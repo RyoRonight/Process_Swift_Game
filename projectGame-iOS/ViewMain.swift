@@ -12,6 +12,8 @@ class ViewMain: UIViewController {
     
     @IBOutlet weak var background: UIImageView!
     @IBOutlet weak var btnTapToPlay: UIButton!
+    @IBOutlet weak var btnShop: UIButton!
+    @IBOutlet weak var btnTop: UIButton!
     
     
     override func viewDidLoad() {
@@ -27,6 +29,8 @@ class ViewMain: UIViewController {
     func setupDisplay() {
         background.image = UIImage(named: "m-background.png")
         btnTapToPlay.setBackgroundImage(UIImage(named: "taptoplay.png"), for: UIControlState.normal)
+        btnTop.setBackgroundImage(UIImage(named: "top.png"), for: .normal)
+        btnShop.setBackgroundImage(UIImage(named: "shop.png"), for: .normal)
     }
 
 }

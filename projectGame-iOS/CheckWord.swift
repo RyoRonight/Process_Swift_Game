@@ -25,11 +25,11 @@ class CheckWord  {
         for _ in 0..<max {
             if arr[i] == word {
                 //tu da ton tai
-                return -1
+                return i
             }
             i = i + 1
         }
         //tu ko ton tai
-        return i
+        return -1
     }
 }

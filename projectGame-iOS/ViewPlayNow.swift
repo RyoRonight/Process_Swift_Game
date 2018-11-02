@@ -11,7 +11,7 @@ import SpriteKit
 
 class ViewPlayNow: UIViewController {
 
-    //outlets giao dien
+    /*outlets giao dien*/
     
     @IBOutlet weak var btnExit: UIButton!
     //6 nut chua 6 ky tu
@@ -25,16 +25,26 @@ class ViewPlayNow: UIViewController {
     @IBOutlet public var lbInput: UILabel!
     //button submit
     @IBOutlet weak var btnSubmit: UIButton!
+    @IBOutlet weak var pgTime: UIProgressView!
+    
+    @IBOutlet weak var vsNotification: UIVisualEffectView!
+    @IBOutlet weak var imgVS: UIImageView!
+    @IBOutlet weak var btnNewGame: UIButton!
+    @IBOutlet weak var btnReview: UIButton!
+    @IBOutlet weak var lbNotification: UILabel!
     
     
-    //khai bao bien toan cuc
+    /*khai bao bien toan cuc*/
     
-    private var scene : ResultCell!
+    public var scene : ResultCell!
     
     //Mang luu dap an
     var resultArray : [String]?
     //Mang luu dap an cua nguoi choi (0,1)
     var answerArray : [Int]?
+    var currentNumAnswer = 0
+    var valueProgressView: Float = 1.0
+    var time: Timer!
     var datagame = DataGame()
     var check = CheckWord()
     
@@ -42,9 +52,7 @@ class ViewPlayNow: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        resultArray = [String](repeating: "D", count: datagame.totalWord)
-        answerArray = [Int](repeating: 0, count: datagame.totalWord)
-        initializeResult()
+        initializeGame()
         
         let size : CGSize!
         let skView = self.view as! SKView
@@ -56,26 +64,9 @@ class ViewPlayNow: UIViewController {
         scene = ResultCell(size: size)
         skView.presentScene(scene)
         
-        
-        print("*****************")
-        for i in 0..<30 {
+        for i in 0..<datagame.totalWord {
             print(resultArray![i])
         }
-        
-    }
-    
-    
-    @IBAction func jjjjj(_ sender: Any) {
-        let size : CGSize!
-        let skView = self.view as! SKView
-        
-        size = self.view.frame.size
-        
-        
-        
-        scene = ResultCell(size: size)
-        scene.hmmm()
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -89,6 +80,14 @@ class ViewPlayNow: UIViewController {
         btnSubmit.setBackgroundImage(UIImage(named: "submit.png"), for: UIControlState.normal)
         setTitleBtn()
         customLbInput()
+        setupNoti()
+    }
+    
+    private func initializeGame() {
+        resultArray = [String](repeating: "D", count: datagame.totalWord)
+        answerArray = [Int](repeating: 0, count: datagame.totalWord)
+        initializeResult()
+        self.time = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.setupTime), userInfo: nil, repeats: true)
     }
     
     private func setTitleBtn() {
@@ -99,6 +98,13 @@ class ViewPlayNow: UIViewController {
         btn4.setTitle(String(keyword_Array[3]), for: .normal)
         btn5.setTitle(String(keyword_Array[4]), for: .normal)
         btn6.setTitle(String(keyword_Array[5]), for: .normal)
+        
+        btn1.titleLabel?.font = UIFont.systemFont(ofSize: 23, weight: UIFont.Weight(rawValue: 3))
+        btn2.titleLabel?.font = UIFont.systemFont(ofSize: 23, weight: UIFont.Weight(rawValue: 3))
+        btn3.titleLabel?.font = UIFont.systemFont(ofSize: 23, weight: UIFont.Weight(rawValue: 3))
+        btn4.titleLabel?.font = UIFont.systemFont(ofSize: 23, weight: UIFont.Weight(rawValue: 3))
+        btn5.titleLabel?.font = UIFont.systemFont(ofSize: 23, weight: UIFont.Weight(rawValue: 3))
+        btn6.titleLabel?.font = UIFont.systemFont(ofSize: 23, weight: UIFont.Weight(rawValue: 3))
     }
     
     private func customLbInput() {
@@ -123,6 +129,19 @@ class ViewPlayNow: UIViewController {
         btn6.isEnabled = true
     }
     
+    func disableAll() {
+        lbInput.text = ""
+        lbInput.isEnabled = false
+        btn1.isEnabled = false
+        btn2.isEnabled = false
+        btn3.isEnabled = false
+        btn4.isEnabled = false
+        btn5.isEnabled = false
+        btn6.isEnabled = false
+        btnSubmit.isHidden = true
+        btnExit.isHidden = true
+    }
+    
     //ham vuot man hinh se refesh 6 o chu
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         refesh()
@@ -130,6 +149,14 @@ class ViewPlayNow: UIViewController {
     
     @IBAction func submit(_ sender: Any) {
         if validateWord() == true {
+            scene.hmmm(stDapAn: lbInput.text!)
+            currentNumAnswer += 1
+            if currentNumAnswer == resultArray?.count {
+                disableAll()
+                isWin(string: "YOU WON!!!")
+                print("Winnnnn!!!")
+                return
+            }
             print("Dung roi")
         }
         else {
@@ -171,7 +198,7 @@ class ViewPlayNow: UIViewController {
                 text = text + String(keyword_Array[tempArray[i]])
             }
             if check.correctWord(word: text.lowercased()) == true {
-                if check.isWordExist(word: text, arr: resultArray, max: datagame.totalWord) > -1 {
+                if check.isWordExist(word: text, arr: resultArray, max: datagame.totalWord) == -1 {
                     resultArray![x] = text
                     x += 1
                 }
@@ -195,6 +222,7 @@ class ViewPlayNow: UIViewController {
             return false
         }
         let i = check.isWordExist(word: lbInput.text!, arr: resultArray, max: datagame.totalWord)
+        print(i)
         if i > -1 {
             if answerArray![i] == 1 {
                 return false
@@ -207,174 +235,61 @@ class ViewPlayNow: UIViewController {
         return true
     }
     
-    
-    
-    
-}
-
-
-
-/*************************************************************************************/
-
-
-
-class ResultCell: SKScene {
-    
-    var timePlay = 180.0
-    private var arr6: NSMutableArray!
-    private var arr5: NSMutableArray!
-    private var arr4: NSMutableArray!
-    private var arr3: NSMutableArray!
-    
-    private var vitriSubarry6 = 0
-    private var vitriSubarry5 = 0
-    private var vitriSubarry4 = 0
-    private var vitriSubarry3 = 0
-    
-    var stDapAn = "18|10|4|15"  // di chuyen xuong init
-    var stRow:[Substring]!
-    //private var background:SKSpriteNode = SKSpriteNode(imageNamed: "background")****
-    private var widthCell : Int!
-    var backgroundAnh:[String] = ["o1","o2"]
-    var anhCell:[String] = ["tomato"]
-    
- 
-    override init(size: CGSize) {
-        super.init(size: size)
-        
-        widthCell = Int(frame.size.width / 21)
-        
-        addBackgourd()
-        stRow = stDapAn.split(separator: "|")
-        taoCacCot(stDapAn: "18|0|0|12", vitriH: Int(frame.size.width / 24))
-
-        
-        hmmm()
-        
-        print("Fne")
+    @IBAction func showSetting(_ sender: Any) {
+        let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PopUpID") as! PopUpViewController
+        self.addChildViewController(popOverVC)
+        popOverVC.view.frame = self.view.frame
+        self.view.addSubview(popOverVC.view)
+        popOverVC.didMove(toParentViewController: self)
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    
-    private func addBackgourd() {
-        // add background
-        let imgBackground : SKSpriteNode = SKSpriteNode(imageNamed: "play-background.png")
-        imgBackground.size = frame.size
-        imgBackground.zPosition = -2
-        imgBackground.position = CGPoint(x: frame.midX, y: frame.midY)
-        addChild(imgBackground)
-    }
-    
-    private func createKhung(numberCell:Int, typeCell:Int, vitri:CGPoint) -> NSMutableArray{
-        
-        let arrAllImange: NSMutableArray = NSMutableArray()
-        
-        
-        var xCen:Int = widthCell
-        var yCen:Int = Int(vitri.y)
-        
-        
-        //tao khung bao
-        
-        let khungbao:SKSpriteNode = SKSpriteNode(imageNamed: "khungbao")
-        khungbao.position = CGPoint(x: Int(vitri.x) + xCen / 2 - 2, y: Int(frame.midX) - Int(vitri.y) - widthCell * (numberCell / typeCell) - widthCell / 2 + widthCell - 2 )
-        khungbao.anchorPoint = CGPoint(x: 0, y: 0)
-        khungbao.zPosition = -1
-        khungbao.size = CGSize(width: widthCell * typeCell + 4, height: widthCell * numberCell / typeCell + 4)
-        addChild(khungbao)
-        
-        //tao cell
-        
-        for v in 0..<numberCell/typeCell{
-            for h in 0..<typeCell{
-                
-                //tao background cua khung bao
-                let backgr: SKSpriteNode = SKSpriteNode(imageNamed: backgroundAnh[(v + h + typeCell)%2])
-                backgr.position = CGPoint(x: xCen + Int(vitri.x), y: Int(frame.midX) - yCen)
-                
-                backgr.size = CGSize(width: widthCell, height: widthCell)
-                
-                addChild(backgr)
-                
-                // tao doi tuong o
-                let umage:SKSpriteNode = SKSpriteNode(imageNamed: "tomato.png")
-                umage.position = CGPoint(x: xCen + Int(vitri.x), y: Int(frame.midX) - yCen)
-                umage.size = CGSize(width: widthCell, height: widthCell)
-                addChild(umage)
-                
-                // luu tung o lai
-                arrAllImange.add(umage)
-                
-                
-                xCen += widthCell
-            }
-            xCen = widthCell
-            yCen += widthCell
-        }
-        return arrAllImange
-    }
-    
-    private func getNumberCell( stDapAn: String ) -> Int {
-        var soCot:Int = 18
-        for i in 0 ..< stRow.count{
-            if stRow[i] == "0"{
-                soCot -= 6 - i
-            }
-        }
-        return soCot
-    }
-    
-    private func taoCacCot(stDapAn:String, vitriH:Int) -> Void {
-        let numberCell = getNumberCell(stDapAn: stDapAn)
-        var vitriW = (Int(frame.width) - widthCell*numberCell) / 2 - widthCell / 2 - 10
-        
-        if stRow[0] != "0" {
-            vitriW -= 20
-            arr6 = createKhung(numberCell: Int(stRow[0])!, typeCell: 6, vitri: CGPoint(x: vitriW, y: vitriH))
-            vitriW += widthCell * 6 + 40
-        }
-        if stRow[1] != "0" {
-            vitriW -= 20
-            arr5 = createKhung(numberCell: Int(stRow[1])!, typeCell: 5, vitri: CGPoint(x: vitriW, y: vitriH))
-            vitriW += widthCell * 5 + 40
-        }
-        if stRow[2] != "0" {
-            vitriW -= 20
-            arr4 = createKhung(numberCell: Int(stRow[2])!, typeCell: 4, vitri: CGPoint(x: vitriW, y: vitriH))
-            vitriW += widthCell * 4 + 40
-        }
-        if stRow[3] != "0" {
-            vitriW -= 20
-            arr3 = createKhung(numberCell: Int(stRow[3])!, typeCell: 3, vitri: CGPoint(x: vitriW, y: vitriH))
+    @objc func setupTime() {
+        valueProgressView -= 1/50
+        pgTime.setProgress(valueProgressView, animated: true)
+        if valueProgressView <= 0 {
+            isWin(string: "YOU LOSE")
+            disableAll()
         }
     }
     
-    open func hmmm() {
-        let mangDapAn = Array(stDapAn)
-        //let typeCell = mangDapAn.count
-        let x = arr6.object(at: 13) as! SKSpriteNode
-        let y = x.copy() as! SKSpriteNode
-        addChild(y)
+    private func setupNoti() {
+        imgVS.image = UIImage(named: "layer 2.png")
         
-        let path: UIBezierPath = UIBezierPath()
-        path.move(to: CGPoint(x: -100, y: 0))
+        btnNewGame.setBackgroundImage(UIImage(named: "layer 3.png"), for: UIControlState.normal)
+        btnNewGame.setTitle("New Game", for: .normal)
+        btnNewGame.setTitleColor(UIColor(red: 0.9294, green: 0.1216, blue: 0, alpha: 1.0), for: .normal)
+        btnNewGame.titleLabel?.font = UIFont(name: "Family", size: 20)
         
-        path.addLine(to: CGPoint(x: Int(x.position.x)
-            + 30, y: Int(x.position.y) + 50))
-        let action = SKAction.follow(path.cgPath, duration: 3)
-        let actionScaleX = SKAction.scale(by: 0.8, duration: 0.1)
-        x.texture = SKTexture(imageNamed: "o12")
-        x.run(actionScaleX)
-        y.run(action, completion: {
-            
-            y.removeFromParent()
-            
-        })
+        btnReview.setBackgroundImage(UIImage(named: "layer 3.png"), for: UIControlState.normal)
+        btnReview.setTitle("Review", for: .normal)
+        btnReview.setTitleColor(UIColor(red: 0.9294, green: 0.1216, blue: 0, alpha: 1.0), for: .normal)
+        btnReview.titleLabel?.font = UIFont(name: "Family", size: 20)
+        
+        lbNotification.textAlignment = .center
+        lbNotification.font = UIFont.systemFont(ofSize: 30, weight: UIFont.Weight(rawValue: 3))
+        lbNotification.textColor = UIColor(red: 0.8471, green: 0, blue: 0, alpha: 1.0)
+        hiddenNoti()
+    }
+    
+    private func hiddenNoti() {
+        vsNotification.alpha = 0
+    }
+    
+    private func isWin(string: String) {
+        time.invalidate()
+        time = nil
+        lbNotification.text = string
+        vsNotification.transform = CGAffineTransform(scaleX: 0.3, y: 2)
+        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: .allowUserInteraction, animations: {
+            self.vsNotification.transform = .identity
+        }) { (success) in
+        }
+        vsNotification.alpha = 1
+    }
+    
+    @IBAction func clickBtnReview(_ sender: Any) {
+        vsNotification.alpha = 0
+        btnExit.isHidden = false
     }
     
 }
-
-
