@@ -21,25 +21,26 @@ class ResultCell: SKScene {
     private var vitriSubarry4 = 0
     private var vitriSubarry3 = 0
     
-    var stDapAn = "0|0|4|9"  // di chuyen xuong init
-    var stRow:[Substring]!
+    
     private var widthCell : Int!
     var backgroundAnh:[String] = ["o1","o2"]
-    var anhCell:[String] = ["tomato", "pear", "plum", "banana", "carrot"]
+    var anhCell:[String] = ["carrot"] //["tomato", "pear", "plum", "banana", "carrot"]
+    var keyWord: KeyWord!
     
     override init(size: CGSize) {
         super.init(size: size)
-        
-        widthCell = Int(frame.size.width / 21)
-        
+        widthCell = Int(frame.size.width / 24) > 35 ? 35 : Int(frame.size.width / 24)
         addBackgourd()
-        stRow = stDapAn.split(separator: "|")
-        taoCacCot(stDapAn: "18|0|0|12", vitriH: Int(frame.size.width / 24))
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    public func khoitao(word:KeyWord){
+        self.keyWord = word
+        taoCacCot(vitriH: Int(frame.size.width / 24))
+    }
+    
     
     private func addBackgourd() {
         // add background
@@ -57,15 +58,16 @@ class ResultCell: SKScene {
         var yCen:Int = Int(vitri.y)
         
         //tao khung bao
-        let khungbao:SKSpriteNode = SKSpriteNode(imageNamed: "khungbao")
-        khungbao.position = CGPoint(x: Int(vitri.x) + xCen / 2 - 2, y: Int(frame.midX) - Int(vitri.y) - widthCell * (numberCell / typeCell) - widthCell / 2 + widthCell - 2 )
-        khungbao.anchorPoint = CGPoint(x: 0, y: 0)
-        khungbao.zPosition = -1
-        khungbao.size = CGSize(width: widthCell * typeCell + 4, height: widthCell * numberCell / typeCell + 4)
-        addChild(khungbao)
-        
+//        let khungbao:SKSpriteNode = SKSpriteNode(imageNamed: "khungbao")
+//        khungbao.position = CGPoint(x: Int(vitri.x) + xCen / 2 - 2, y: Int(frame.midX) - Int(vitri.y) - widthCell * (numberCell / typeCell) - widthCell / 2 + widthCell - 2 )
+//        khungbao.anchorPoint = CGPoint(x: 0, y: 0)
+//        khungbao.zPosition = -1
+//        khungbao.size = CGSize(width: widthCell * typeCell + 4, height: widthCell * numberCell / typeCell + 4)
+//        addChild(khungbao)
+//
         //tao cell
-        for v in 0..<numberCell/typeCell{
+        
+        for v in 0..<numberCell{
             for h in 0..<typeCell{
                 
                 //tao background cua khung bao
@@ -93,38 +95,36 @@ class ResultCell: SKScene {
         return arrAllImange
     }
     
-    private func getNumberCell( stDapAn: String ) -> Int {
-        var soCot:Int = 18
-        for i in 0 ..< stRow.count{
-            if stRow[i] == "0"{
-                soCot -= 6 - i
-            }
-        }
-        return soCot
-    }
     
-    private func taoCacCot(stDapAn:String, vitriH:Int) -> Void {
-        let numberCell = getNumberCell(stDapAn: stDapAn)
-        var vitriW = (Int(frame.width) - widthCell*numberCell) / 2 - widthCell / 2 - 10
-        
-        if stRow[0] != "0" {
-            vitriW -= 20
-            arr6 = createKhung(numberCell: Int(stRow[0])!, typeCell: 6, vitri: CGPoint(x: vitriW, y: vitriH))
-            vitriW += widthCell * 6 + 40
+    private func taoCacCot(vitriH:Int) -> Void {
+        var x = 0
+        if keyWord.SoLuong6 != 0 {
+            x += 6
         }
-        if stRow[1] != "0" {
-            vitriW -= 20
-            arr5 = createKhung(numberCell: Int(stRow[1])!, typeCell: 5, vitri: CGPoint(x: vitriW, y: vitriH))
-            vitriW += widthCell * 5 + 40
+        if keyWord.SoLuong5 != 0{
+            x += 5
         }
-        if stRow[2] != "0" {
-            vitriW -= 20
-            arr4 = createKhung(numberCell: Int(stRow[2])!, typeCell: 4, vitri: CGPoint(x: vitriW, y: vitriH))
-            vitriW += widthCell * 4 + 40
+        if keyWord.SoLuong4 != 0 {
+            x += 4
         }
-        if stRow[3] != "0" {
-            vitriW -= 20
-            arr3 = createKhung(numberCell: Int(stRow[3])!, typeCell: 3, vitri: CGPoint(x: vitriW, y: vitriH))
+        if keyWord.SoLuong3 != 0 {
+            x += 3
+        }
+        var vitriW = (Int(frame.width) - widthCell * x) / 2 - 20        
+        if keyWord.SoLuong6 != 0 {
+            arr6 = createKhung(numberCell: keyWord.SoLuong6, typeCell: 6, vitri: CGPoint(x: vitriW, y: vitriH))
+            vitriW += widthCell * 6 + 20
+        }
+        if keyWord.SoLuong5 != 0 {
+            arr5 = createKhung(numberCell: keyWord.SoLuong5, typeCell: 5, vitri: CGPoint(x: vitriW, y: vitriH))
+            vitriW += widthCell * 5 + 20
+        }
+        if keyWord.SoLuong4 != 0 {
+            arr4 = createKhung(numberCell: keyWord.SoLuong4, typeCell: 4, vitri: CGPoint(x: vitriW, y: vitriH))
+            vitriW += widthCell * 4 + 20
+        }
+        if keyWord.SoLuong3 != 0 {
+            arr3 = createKhung(numberCell: keyWord.SoLuong3, typeCell: 3, vitri: CGPoint(x: vitriW, y: vitriH))
         }
     }
     
@@ -156,34 +156,51 @@ class ResultCell: SKScene {
     
     private func animatiton(arr: NSMutableArray!, vitriSubarry: Int, mangDapAn: [Character]) {
         var indexDapAN = 0
-        
-        if vitriSubarry >= Int(stRow[6 - mangDapAn.count])!{
-            return
+        switch mangDapAn.count {
+        case 6:
+            if vitriSubarry >= keyWord.SoLuong6 * 6 {
+                return
+            }
+            break
+        case 5:
+            if vitriSubarry >= keyWord.SoLuong5 * 5 {
+                return
+            }
+            break
+        case 4:
+            if vitriSubarry >= keyWord.SoLuong4 * 4 {
+                return
+            }
+            break
+        default:
+            if  vitriSubarry >= keyWord.SoLuong3 * 3 {
+                return
+            }
         }
+        
+        
         for i in vitriSubarry ..< vitriSubarry + mangDapAn.count {
             let x = arr.object(at: i) as! SKSpriteNode
-            let y = x.copy() as! SKSpriteNode
-            addChild(y)
+            //let y = x.copy() as! SKSpriteNode
+           // addChild(y)
+//            let path: UIBezierPath = UIBezierPath()
+//            path.move(to: CGPoint(x: x.position.x + 100, y: 0))
+//            let random = Int(arc4random_uniform(100))
+//            let random1 = Int(arc4random_uniform(150))
+//
+//            path.addLine(to: CGPoint(x: Int(x.position.x) + random, y: Int(x.position.y) + random1))
+//            let action = SKAction.follow(path.cgPath, duration: 4)
+//            x.run(action) {
+//
+//            }
             
-            let path: UIBezierPath = UIBezierPath()
-            path.move(to: CGPoint(x: -100, y: 0))
-            
-            let random = Int(arc4random_uniform(100))
-            let random1 = Int(arc4random_uniform(150))
-            
-            path.addLine(to: CGPoint(x: Int(x.position.x) + random, y: Int(x.position.y) + random1))
-            let action = SKAction.follow(path.cgPath, duration: 3)
             let actionScaleX = SKAction.scale(by: 0.8, duration: 0.1)
-            //x.texture = SKTexture(imageNamed: String(mangDapAn[indexDapAN]))
-            x.texture = SKTexture(imageNamed: "o12")
             x.run(actionScaleX)
-            y.run(action, completion: {
-                
-                y.removeFromParent()
-                
-            })
+            x.texture = SKTexture(imageNamed: String(mangDapAn[indexDapAN]).lowercased())
             indexDapAN += 1
+            
         }
+        indexDapAN = 0;
     }
     
 }
